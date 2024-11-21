@@ -15,9 +15,9 @@ public class BankAccount {
         this.balance = balance;
     }
     
-    synchronized public void deposit(double balance){
+    synchronized public void deposit(double balnce){
     
-        setBalance(getBalance()+balance);
+        setBalance(getBalance()+balnce);
        // System.out.println("deposited succesfuly");
     }
     
@@ -33,11 +33,13 @@ public class BankAccount {
     }
     
     
-    public static void main(String args[]){
+    public static void main(String args[]) throws InterruptedException{
     BankAccount acc = new BankAccount(0);
     DepositThread d = new DepositThread(acc);
     WithdrawThread w = new WithdrawThread(acc);
-    
+    d.join();
+    w.join();
+        System.out.println("final balance:"+acc.getBalance());
     }
     
     public void setBalance(double balance){

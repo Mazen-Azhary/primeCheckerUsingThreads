@@ -28,6 +28,7 @@ public class DepositThread extends Thread {
             acc.deposit(amount);
             System.out.println("succesful deposit " + (i + 1) + " amount:" + amount);
             try {
+                
                 sleep(1000);
             } catch (InterruptedException ex) {
             }
