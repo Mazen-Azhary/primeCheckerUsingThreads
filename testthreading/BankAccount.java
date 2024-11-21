@@ -18,22 +18,27 @@ public class BankAccount {
     synchronized public void deposit(double balance){
     
         setBalance(getBalance()+balance);
-        System.out.println("deposited succesfuly");
+       // System.out.println("deposited succesfuly");
     }
     
     synchronized public boolean withdraw(double amount){
     
         if(amount<=getBalance()){
             setBalance(balance-amount);
-            System.out.println("succesful withdraw");
-            return true;
-            
+           // System.out.println("succesful withdraw");
+            return true;           
         }
             
         return false;
     }
     
     
+    public static void main(String args[]){
+    BankAccount acc = new BankAccount(0);
+    DepositThread d = new DepositThread(acc);
+    WithdrawThread w = new WithdrawThread(acc);
+    
+    }
     
     public void setBalance(double balance){
     if(balance>=0)
