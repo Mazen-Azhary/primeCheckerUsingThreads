@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class NumberGenerator extends Thread {
     private int n;
+    private boolean sent;
 
     public NumberGenerator(int n) {
         this.setN(n);
+        sent=false;
         start();
     }
 
