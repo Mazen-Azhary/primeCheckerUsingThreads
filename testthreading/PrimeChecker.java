@@ -22,12 +22,14 @@ public class PrimeChecker extends Thread {
     }
 
     public void run() {
+        int num;
         while(true){
-        if(shared.getNum()==-1){
+            num = shared.getNum();
+        if(num==-1){
         break;
         }
-        if(isPrime(shared.getNum()))
-                System.out.println(shared.getNum());
+        if(isPrime(num))
+                System.out.println(num);
         }
     }
 
