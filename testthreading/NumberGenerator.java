@@ -5,47 +5,23 @@ import java.util.Scanner;
 public class NumberGenerator extends Thread {
 
     private int n;
-    private boolean generated;
-    private int a[];
+    SharedNumber shared;
 
-    public NumberGenerator(int n) {
-        a = new int[1];
-        this.setN(n);
-        generated = false;
+    public NumberGenerator(int n,SharedNumber shared) {
+       this.n=n;
+       this.shared=shared;
         start();
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        long start = System.currentTimeMillis();
-        Scanner s = new Scanner(System.in);
-        System.out.println("Enter a number: ");
-        int n = s.nextInt();
-        s.nextLine();
-        NumberGenerator numberGenerator = new NumberGenerator(n);
-        numberGenerator.join();
-        s.close();
-        System.out.println("Time:" + (System.currentTimeMillis() - start) + " milliseconds");
-    }
+    
 
-    public synchronized void run() {
+    public void run() {
 
-        PrimeChecker primeChecker = new PrimeChecker(this, a, n);
-        for (int i = 0; i < n; i++) {
-            if (generated) {
-                try {
-                    System.out.println("in wait");
-                    wait();
-                } catch (InterruptedException ex) {
-                }
-            } else {
-                a[0] = i + 1;
-                System.out.println("generated num");
-                toggleGenerated();             
-                primeChecker.toggleGenerated();
-                notifyAll();
-            }
-
+       for (int i = 1; i <= n; i++) {
+            shared.setNum(i);
         }
+        shared.setNum(-1);
+
     }
 
     public void setN(int n) {
@@ -58,10 +34,6 @@ public class NumberGenerator extends Thread {
 
     public int getN() {
         return n;
-    }
-
-    public void toggleGenerated() {
-        this.generated = !this.generated;
     }
 
 }
