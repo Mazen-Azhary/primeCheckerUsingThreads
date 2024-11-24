@@ -18,19 +18,21 @@ public class SharedNumber {
     private boolean isSet;
 
     public synchronized void setNum(int n) {
+        //System.out.println("in set");
         if (isSet) {
 
             try {
                 wait();
             } catch (InterruptedException ex) {
             }
-            this.number = n;
-            isSet = true;
-            notify();
 
         }
+            this.number = n;
+            isSet = true;
+            notifyAll();
     }
     public synchronized int getNum() {
+      //  System.out.println("in get");
         if (!isSet) {
 
             try {
@@ -40,7 +42,7 @@ public class SharedNumber {
 
         }
         isSet = false;
-        notify();
+        notifyAll();
         return number;
 
     }
@@ -52,10 +54,10 @@ public class SharedNumber {
         int n = s.nextInt();
         s.nextLine();
         SharedNumber myN = new SharedNumber();
-        NumberGenerator numberGenerator = new NumberGenerator(n, myN);
+        NumberGenerator numbergenerator = new NumberGenerator(n, myN);
         PrimeChecker p = new PrimeChecker(myN);
 
-        numberGenerator.join();
+        numbergenerator.join();
         p.join();
 
         s.close();
